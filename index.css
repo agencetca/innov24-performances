@@ -49,3 +49,7 @@ body {
 #users input:focus {
     outline: none;
 }
+
+.g-signin2 {
+	margin:10px;
+}
