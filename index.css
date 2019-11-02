@@ -1,0 +1,51 @@
+body {
+	font-family : arial
+}
+
+#main {
+
+	position: relative;
+	width:400px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 17%;
+}
+
+#main div {
+	float: left;
+	font-size: 45px;
+}
+
+#logo {
+	width:100%;
+}
+
+#logo img{
+	width:60px;
+}
+
+#users {
+	width:100%;
+}
+
+#users ul {
+	list-style-type: none;
+}
+
+#users ul li .item {
+	border: 1px solid #333;
+	font-size: 0.4em;
+	padding:4px;
+	margin:4px;
+	float: left;
+}
+
+#users input {
+	float: left;
+	border: 0px solid;
+	width:100%;
+}
+
+#users input:focus {
+    outline: none;
+}

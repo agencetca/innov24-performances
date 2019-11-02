@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<meta charset='utf-8'/>
+		<title>Innov24 Performances</title>
+		<link rel="stylesheet" type="text/css" href="index.css"></link>
+
+		<!-- Google connect -->
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+
+	</head>
+	<body>
+		
+		<div id="main">
+			<div id="logo">
+			<img src="logo.png"/>
+			</div>
+			<div id="hours">00</div>
+			<div>:</div>
+			<div id="minutes">00</div>
+			<div>:</div>
+			<div id="seconds">00</div>
+
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+			<div id="users">
+				<input placeholder="Current Task" type="text"></input>
+				<ul>
+					<li><div title="" class="item">Erick<div></li>
+					<li><div title="Gantt Technique" class="item">Guillaume<div></li>
+				</ul>
+			</div>
+		</div>
+
+	<script>
+		let hours = document.getElementById('hours')
+		let minutes = document.getElementById('minutes')
+		let seconds = document.getElementById('seconds')
+
+		h = hours.innerHTML || 0
+		m = minutes.innerHTML || 0
+		s = seconds.innerHTML || 0
+
+		window.setInterval(() => {
+
+			if (h < 23 && m == 59 && s == 59) {
+				h++
+			} else if (h == 23 && m == 59 && s == 59) {
+				h = 0
+			}
+
+			if (m < 59 && s == 59) {
+				m++
+			} else if (m == 59 && s == 59) {
+				m = 0
+			}
+
+			if (s < 59) {
+				s++
+			} else {
+				s = 0
+			}
+
+			hours.innerHTML = ("0" + h).slice(-2)
+			minutes.innerHTML = ("0" + m).slice(-2)
+			seconds.innerHTML = ("0" + s).slice(-2)
+
+		}, 1000)
+
+	</script>
+
+	</body>
+</html>
