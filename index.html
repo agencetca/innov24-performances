@@ -54,7 +54,7 @@
 
 		window.setInterval(() => {
 
-			if ( typeof googleUser === 'undefined' || ! googleUser.getBasicProfile()) return;
+			if ( typeof googleUser === 'undefined' ) return;
 
 			if (h < 23 && m == 59 && s == 59) {
 				h++
