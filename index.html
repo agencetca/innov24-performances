@@ -78,6 +78,8 @@
 			hours.innerHTML = ("0" + h).slice(-2)
 			minutes.innerHTML = ("0" + m).slice(-2)
 			seconds.innerHTML = ("0" + s).slice(-2)
+			
+			getUsers()
 
 		}, 1000)
 
@@ -217,31 +219,6 @@
 
 			}
 		}
-
-var inactivityTime = function () {
-	var time;
-	window.onload = resetTimer;
-
-	// DOM Events
-	document.onmousemove = resetTimer;
-	document.onkeypress = resetTimer;
-
-	function logout() {
-		console.log('logout')
-		// window.location.reload()
-	}
-
-	function resetTimer() {
-		clearTimeout(time);
-		time = setTimeout(logout, 3000)
-	}
-};
-
-window.onload = function() {
-	inactivityTime();
-}
-
-
 
 	 </script>
 
