@@ -93,6 +93,7 @@
 		firebase.initializeApp(firebaseConfig);
 		firebase.analytics();
 
+		const db = firebase.firestore();
 		let profile;
 
 		function isUserEqual(googleUser, firebaseUser) {
