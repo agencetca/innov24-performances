@@ -117,7 +117,6 @@
 		function onSignIn(googleUser) {
 
 		  profile = googleUser.getBasicProfile();
-		  state = true
 
 		  // We need to register an Observer on Firebase Auth to make sure auth is initialized.
 		  var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
@@ -137,8 +136,9 @@
 				googleUser.getAuthResponse().id_token);
 			  // Sign in with credential from the Google user.
 			  firebase.auth().signInWithCredential(credential)
-					.then(function() {
+				  	.then(function() {
 						state = true
+						console.log("state updated")
 					})
 					.catch(function(error) {
 						console.log("Firestore auth failed")
