@@ -145,26 +145,22 @@
 
 		function getUsers() {
 
+			let network = document.getElementById("network");
+			network.innerHTML = "";
+
 			db.collection("tasks").get()
 			.then(function(querySnapshot) {
 				querySnapshot.forEach(function(doc) {
 				  // doc.data() is never undefined for query doc snapshots
 				  // console.log(doc.id, " => ", doc.data());
 				  if (doc.exists) {
-					// console.log(collection)
-					let network = document.getElementById("network");
-
-					document.getElementById("network").innerHTML = "";
-
-					for (i in collection) {
-						let item = document.createElement('li')
-						let user = document.createElement('div')
-						user.setAttribute('title',i.current_task)
-						user.setAttribute('class','item')
-						user.innerHTML = i.username
-						item.appendChild(user)
-						network.appendChild(item)
-					}
+				    let item = document.createElement('li')
+				    let user = document.createElement('div')
+				    user.setAttribute('title',doc.data().current_task)
+				    user.setAttribute('class','item')
+				    user.innerHTML = doc.data().username
+				    item.appendChild(user)
+				    network.appendChild(item)
 				  } 
 				});
 			}).catch(function(error) {
