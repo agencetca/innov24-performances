@@ -56,8 +56,6 @@
 
 		window.setInterval(() => {
 
-			if (profile === null) return;
-
 			if (h < 23 && m == 59 && s == 59) {
 				h++
 			} else if (h == 23 && m == 59 && s == 59) {
@@ -221,6 +219,30 @@
 
 			}
 		}
+
+var inactivityTime = function () {
+	var time;
+	window.onload = resetTimer;
+
+	// DOM Events
+	document.onmousemove = resetTimer;
+	document.onkeypress = resetTimer;
+
+	function logout() {
+		window.location.reload()
+	}
+
+	function resetTimer() {
+		clearTimeout(time);
+		time = setTimeout(logout, 10000)
+	}
+};
+
+window.onload = function() {
+	inactivityTime();
+}
+
+
 
 	 </script>
 
