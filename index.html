@@ -78,9 +78,6 @@
 			minutes.innerHTML = ("0" + m).slice(-2)
 			seconds.innerHTML = ("0" + s).slice(-2)
 
-			// Test
-			console.log(firebase.auth().currentUser);
-
 		}, 1000)
 
 		const firebaseConfig = {
@@ -97,6 +94,8 @@
 		firebase.initializeApp(firebaseConfig);
 		firebase.analytics();
 
+		const profile;
+
 		function isUserEqual(googleUser, firebaseUser) {
 		  if (firebaseUser) {
 		    var providerData = firebaseUser.providerData;
@@ -112,7 +111,7 @@
 		}
  
 		function onSignIn(googleUser) {
-		  console.log('Google Auth Response', googleUser);
+		  profile = googleUser.getBasicProfile();
 		  // We need to register an Observer on Firebase Auth to make sure auth is initialized.
 		  var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
 			unsubscribe();
@@ -128,17 +127,14 @@
 				var email = error.email;
 				var credential = error.credential;
 			  });
-			} else {
-			  console.log('User already signed-in Firebase.');
 			}
 		  });
 		}
 
 		function updateTime() {
 
-			if (firebase.auth().currentUser) {
+			if (profile && firebase.auth().currentUser) {
 
-		    	  const profile = googleUser.getBasicProfile();
 			  const userId = firebase.auth().currentUser.uid;
 
 			  firebase.database().ref('users/' + userId).set({
