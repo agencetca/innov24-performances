@@ -128,8 +128,16 @@
 				var email = error.email;
 				var credential = error.credential;
 			  });
+			}
+		  });
+		}
+
+		function updateTime() {
+
+			if (profile && firebase.auth().currentUser) {
 
 			  const userId = firebase.auth().currentUser.uid;
+			  const taskdb = db.collection("tasks").doc(userId);
 
 			  db.collection("tasks").doc(userId).set({
 				username: profile.getName(),
@@ -144,29 +152,6 @@
 			  })
 			  .catch(function(error) {
     			    console.error("Error writing document: ", error);
-			  });
-			}
-		  });
-		}
-
-		function updateTime() {
-
-			if (profile && firebase.auth().currentUser) {
-
-			  const userId = firebase.auth().currentUser.uid;
-			  const taskdb = db.collection("tasks").doc(userId);
-
-			  return taskdb.update({
-				hours : h,
-				minutes : m,
-				seconds : s
-			  })
-			  .then(function() {
-				console.log("Document successfully updated!");
-			  })
-			  .catch(function(error) {
-				// The document probably doesn't exist.
-				console.error("Error updating document: ", error);
 			  });
 
 			}
