@@ -57,8 +57,8 @@
 		window.setInterval(() => {
 
 			try {
-				console.log(firebase.auth().currentUser)
-				if (firebase.auth().currentUser) {
+				console.log(GoogleAuth.isSignedIn.get())
+				if (GoogleAuth.isSignedIn.get()) {
 					state = true
 					console.log("state is true")
 				} else {
