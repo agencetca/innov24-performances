@@ -83,19 +83,9 @@
 		let profile = null;
 		let dbuser = null
 
-		firebase.auth().onAuthStateChanged(function(user) {
-		  if (user) {
-		    // User is signed in.
-	 	    dbuser = user
-		  }
-		});
+		// Your web app's Firebase configuration
 
-		function onSignIn(googleUser) {
-
-		    profile = googleUser.getBasicProfile();
-		    // Your web app's Firebase configuration
-
-		    const firebaseConfig = {
+		const firebaseConfig = {
 		       apiKey: "AIzaSyAwLXckrroTUjaS8h6-rjaX9EfBI3EShm0",
 		       authDomain: "innov24-performances.firebaseapp.com",
 		       databaseURL: "https://innov24-performances.firebaseio.com",
@@ -104,12 +94,21 @@
 	               messagingSenderId: "75780825100",
 		       appId: "1:75780825100:web:c91296634ac3ee61dd0e29",
 		       measurementId: "G-EZP9D6WF08"
-		    };
+		};
 
-		    // Initialize Firebase
-		    firebase.initializeApp(firebaseConfig);
-		    firebase.analytics();
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		firebase.analytics();
 
+		firebase.auth().onAuthStateChanged(function(user) {
+		  if (user) {
+		    // User is signed in.
+	 	    dbuser = user
+		  }
+		});
+
+		function onSignIn(googleUser) {
+		    profile = googleUser.getBasicProfile();
 		}
 
 		function writeUserData(userId, name, email, imageUrl, times) {
