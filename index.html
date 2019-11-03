@@ -81,31 +81,21 @@
 		}, 1000)
 
 		let profile = null;
-		let dbuser = null
-
-		// Your web app's Firebase configuration
 
 		const firebaseConfig = {
-		       apiKey: "AIzaSyAwLXckrroTUjaS8h6-rjaX9EfBI3EShm0",
-		       authDomain: "innov24-performances.firebaseapp.com",
-		       databaseURL: "https://innov24-performances.firebaseio.com",
-		       projectId: "innov24-performances",
-		       storageBucket: "innov24-performances.appspot.com",
-	               messagingSenderId: "75780825100",
-		       appId: "1:75780825100:web:c91296634ac3ee61dd0e29",
-		       measurementId: "G-EZP9D6WF08"
+			apiKey: "AIzaSyBRJmGO8h0Z2lPhh_aWn4oalxbxLuYnDBc",
+			authDomain: "innov24-performa-1572737800183.firebaseapp.com",
+			databaseURL: "https://innov24-performa-1572737800183.firebaseio.com",
+			projectId: "innov24-performa-1572737800183",
+			storageBucket: "innov24-performa-1572737800183.appspot.com",
+			messagingSenderId: "884865850203",
+			appId: "1:884865850203:web:5e1b62377449ed8008587e",
+			measurementId: "G-8KD86TYRGG"
 		};
 
 		// Initialize Firebase
 		firebase.initializeApp(firebaseConfig);
 		firebase.analytics();
-
-		firebase.auth().onAuthStateChanged(function(user) {
-		  if (user) {
-		    // User is signed in.
-	 	    dbuser = user
-		  }
-		});
 
 		function onSignIn(googleUser) {
 		    profile = googleUser.getBasicProfile();
@@ -113,7 +103,6 @@
 
 		function writeUserData(userId, name, email, imageUrl, times) {
 
-		  // Get a reference to the database service
 		  firebase.database().ref('users/' + userId).set({
 		    username: name,
 		    email: email,
@@ -127,7 +116,8 @@
 
 		function updateTime() {
 
-			if (profile && profile.getName(), profile.getEmail(), profile.getImageUrl() && profile.getId()) {
+
+			if (firebase.auth().currentUser) {
 
 			  const times = {
 				hours : h,
