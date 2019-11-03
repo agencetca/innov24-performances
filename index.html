@@ -34,6 +34,16 @@
 			</div>
 		</div>
 
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
+
+	<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+	 https://firebase.google.com/docs/web/setup#available-libraries -->
+	 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script>
+
 	<script>
 		const hours = document.getElementById('hours')
 		const minutes = document.getElementById('minutes')
@@ -71,6 +81,7 @@
 		}, 1000)
 
 		let profile = null;
+
 		function onSignIn(googleUser) {
 		    profile = googleUser.getBasicProfile();
 		    // Your web app's Firebase configuration
@@ -92,20 +103,6 @@
 		    getTime();
 
 		}
-
-	</script>
-
-	<!-- The core Firebase JS SDK is always required and must be listed first -->
-	<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
-
-	<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
-
-	<!-- TODO: Add SDKs for Firebase products that you want to use
-	 https://firebase.google.com/docs/web/setup#available-libraries -->
-	 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script>
-
-	 <script>
 
 		function writeUserData(userId, name, email, imageUrl, times) {
 
