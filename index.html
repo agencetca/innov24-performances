@@ -42,7 +42,7 @@
 
 	<script>
 
-		let state = false
+		let profile = null;
 
 		const hours = document.getElementById('hours')
 		const minutes = document.getElementById('minutes')
@@ -56,21 +56,7 @@
 
 		window.setInterval(() => {
 
-			try {
-				console.log(GoogleAuth.isSignedIn.get())
-				if (GoogleAuth.isSignedIn.get()) {
-					state = true
-					console.log("state is true")
-				} else {
-					state = false
-					console.log("state is false")
-				}
-			} catch(e) {
-				state = false
-				console.log("state is false")
-			}
-
-			if (state === false) return;
+			if (profile === null) return;
 
 			if (h < 23 && m == 59 && s == 59) {
 				h++
@@ -112,7 +98,6 @@
 		firebase.analytics();
 
 		const db = firebase.firestore();
-		let profile;
 
 		function isUserEqual(googleUser, firebaseUser) {
 		  if (firebaseUser) {
