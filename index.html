@@ -26,11 +26,8 @@
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 			<div id="users">
-				<input placeholder="Current Task" type="text"></input>
-				<!--ul>
-					<li><div title="" class="item">Erick<div></li>
-					<li><div title="Gantt Technique" class="item">Guillaume<div></li>
-				</ul-->
+				<input id="current_task" placeholder="Current Task" type="text"></input>
+				<ul id="network"></ul>
 			</div>
 		</div>
 
@@ -44,15 +41,22 @@
 	 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script>
 
 	<script>
+
+		let state = false;
+
 		const hours = document.getElementById('hours')
 		const minutes = document.getElementById('minutes')
 		const seconds = document.getElementById('seconds')
+		const current_task = document.getElementById('current_task')
 
 		let h = hours.innerHTML || 0
 		let m = minutes.innerHTML || 0
 		let s = seconds.innerHTML || 0
+		let t = current_task.innerHTML || ""
 
 		window.setInterval(() => {
+
+			if ( ! state ) return;
 
 			if (h < 23 && m == 59 && s == 59) {
 				h++
@@ -112,6 +116,8 @@
  
 		function onSignIn(googleUser) {
 
+		  state = true;
+
 		  h = 0;
 		  m = 0;
 		  s = 0;
@@ -138,14 +144,40 @@
 		  });
 		}
 
+		function getUsers() {
+
+			  let docRef = db.collection("tasks");
+			  docRef.get().then(function(collection) {
+				if (collection.exists) {
+					console.log(collection)
+					let network = document.getElementById("network");
+
+					document.getElementById("network").innerHTML = "";
+
+					for (i in collection) {
+						let item = document.createElement('li')
+						let user = document.createElement('div')
+						user.setAttribute('title',i.current_task)
+						user.setAttribute('class','item')
+						user.innerHTML = i.username
+						item.appendChild(user)
+						network.appendChild(item)
+					}
+
+					//<li><div title="" class="item">Erick<div></li>
+					//<li><div title="Gantt Technique" class="item">Guillaume<div></li>
+
+				}
+			  });
+		}
+
 		function updateTime() {
 
 			if (profile && firebase.auth().currentUser) {
 
-			  const userId = firebase.auth().currentUser.uid;
-			  const taskdb = db.collection("tasks").doc(userId);
+			  let userId = firebase.auth().currentUser.uid;
 
-			  var docRef = db.collection("tasks").doc(userId);
+			  let docRef = db.collection("tasks").doc(userId);
 			  docRef.get().then(function(doc) {
 				if (doc.exists) {
 
@@ -156,10 +188,12 @@
 					db.collection("tasks").doc(userId).update({
 						hours : h + _h,
 						minutes : m + _m,
-						seconds : s + _s
+						seconds : s + _s,
+						current_task : t
 					})
 				  	.then(function() {
 					  console.log("Document successfully updated!");
+					  getUsers()
 				  	})
 				  	.catch(function(error) {
 					  console.error("Error DB update: ", error);
@@ -167,21 +201,23 @@
 
 				} else {
 
-				  db.collection("tasks").doc(userId).set({
-					  username: profile.getName(),
-					  email: profile.getEmail(),
-					  profile_picture : profile.getImageUrl(),
-					  hours : h,
-					  minutes : m,
-					  seconds : s
-				  })
-				  .then(function() {
-					  console.log("Document successfully created!");
-				  })
-				  .catch(function(error) {
-					  console.error("Error DB create: ", error);
-				  });
-				}
+				db.collection("tasks").doc(userId).set({
+				  username: profile.getName(),
+				  email: profile.getEmail(),
+				  profile_picture : profile.getImageUrl(),
+				  hours : h,
+				  minutes : m,
+				  seconds : s,
+				  current_task : t
+				})
+				.then(function() {
+				  console.log("Document successfully created!");
+			          getUsers()
+				})
+				 .catch(function(error) {
+				  console.error("Error DB create: ", error);
+				});
+			      }
 			  });
 
 			}
