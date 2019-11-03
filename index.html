@@ -111,6 +111,11 @@
 		}
  
 		function onSignIn(googleUser) {
+
+		  h = 0;
+		  m = 0;
+		  s = 0;
+
 		  profile = googleUser.getBasicProfile();
 
 		  // We need to register an Observer on Firebase Auth to make sure auth is initialized.
@@ -123,6 +128,7 @@
 				googleUser.getAuthResponse().id_token);
 			  // Sign in with credential from the Google user.
 			  firebase.auth().signInWithCredential(credential).catch(function(error) {
+				console.log("Firestore auth failed")
 				var errorCode = error.code;
 				var errorMessage = error.message;
 				var email = error.email;
@@ -158,8 +164,9 @@
 				  	.catch(function(error) {
 					  console.error("Error DB update: ", error);
 				  });
-				}
-			  }).catch(function(error) {
+
+				} else {
+
 				  db.collection("tasks").doc(userId).set({
 					  username: profile.getName(),
 					  email: profile.getEmail(),
@@ -174,6 +181,7 @@
 				  .catch(function(error) {
 					  console.error("Error DB create: ", error);
 				  });
+				}
 			  });
 
 			}
