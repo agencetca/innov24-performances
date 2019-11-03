@@ -56,6 +56,16 @@
 
 		window.setInterval(() => {
 
+			firebase.auth().onAuthStateChanged(function(user) {
+				if (user) {
+					state = true
+					console.log("state is true")
+				} else {
+					state = false
+					console.log("state is false")
+				}
+			});
+
 			if (state === false) return;
 
 			if (h < 23 && m == 59 && s == 59) {
@@ -121,8 +131,6 @@
 		  // We need to register an Observer on Firebase Auth to make sure auth is initialized.
 		  var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
 
-			state = false
-
 			unsubscribe();
 			// Check if we are already signed-in Firebase with the correct user.
 			if (!isUserEqual(googleUser, firebaseUser)) {
@@ -135,18 +143,13 @@
 			  var credential = firebase.auth.GoogleAuthProvider.credential(
 				googleUser.getAuthResponse().id_token);
 			  // Sign in with credential from the Google user.
-			  firebase.auth().signInWithCredential(credential)
-				  	.then(function() {
-						state = true
-						console.log("state updated")
-					})
-					.catch(function(error) {
+					firebase.auth().signInWithCredential(credential).catch(function(error) {
 						console.log("Firestore auth failed")
 						var errorCode = error.code;
 						var errorMessage = error.message;
 						var email = error.email;
 						var credential = error.credential;
-			  });
+					});
 			}
 		  });
 		}
