@@ -49,9 +49,9 @@
 		const seconds = document.getElementById('seconds')
 		const current_task = document.getElementById('current_task')
 
-		let h = hours.innerHTML || 0
-		let m = minutes.innerHTML || 0
-		let s = seconds.innerHTML || 0
+		let h = parseInt(hours.innerHTML) || 0
+		let m = parseInt(minutes.innerHTML) || 0
+		let s = parseInt(seconds.innerHTML) || 0
 		let t = current_task.innerHTML || ""
 
 		window.setInterval(() => {
@@ -146,7 +146,7 @@
 			  let docRef = db.collection("tasks");
 			  docRef.get().then(function(collection) {
 				if (collection.exists) {
-					console.log(collection)
+					// console.log(collection)
 					let network = document.getElementById("network");
 
 					document.getElementById("network").innerHTML = "";
@@ -228,7 +228,7 @@ var inactivityTime = function () {
 
 	function logout() {
 		console.log('logout')
-		window.location.reload()
+		// window.location.reload()
 	}
 
 	function resetTimer() {
