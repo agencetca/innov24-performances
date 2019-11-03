@@ -145,21 +145,12 @@
 
 		function getUsers() {
 
-db.collection("tasks")
-.get()
-.then(function(querySnapshot) {
-querySnapshot.forEach(function(doc) {
-// doc.data() is never undefined for query doc snapshots
-console.log(doc.id, " => ", doc.data());
-});
-})
-.catch(function(error) {
-console.log("Error getting documents: ", error);
-});
-
-
-				/*
-				if (collection.exists) {
+			db.collection("tasks").get()
+			.then(function(querySnapshot) {
+				querySnapshot.forEach(function(doc) {
+				  // doc.data() is never undefined for query doc snapshots
+				  // console.log(doc.id, " => ", doc.data());
+				  if (doc.exists) {
 					// console.log(collection)
 					let network = document.getElementById("network");
 
@@ -174,6 +165,14 @@ console.log("Error getting documents: ", error);
 						item.appendChild(user)
 						network.appendChild(item)
 					}
+				  } 
+				});
+			}).catch(function(error) {
+				console.log("Error getting documents: ", error);
+			});
+
+
+				/*
 
 					//<li><div title="" class="item">Erick<div></li>
 					//<li><div title="Gantt Technique" class="item">Guillaume<div></li>
