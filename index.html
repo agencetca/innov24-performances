@@ -42,6 +42,8 @@
 
 	<script>
 
+		let state = false
+
 		const hours = document.getElementById('hours')
 		const minutes = document.getElementById('minutes')
 		const seconds = document.getElementById('seconds')
@@ -54,11 +56,7 @@
 
 		window.setInterval(() => {
 
-			try {
-				googleUser.getBasicProfile()
-			} catch (e) {
-				return
-			}
+			if (state === false) return;
 
 			if (h < 23 && m == 59 && s == 59) {
 				h++
@@ -118,27 +116,36 @@
  
 		function onSignIn(googleUser) {
 
-		  h = 0;
-		  m = 0;
-		  s = 0;
-
+		  state = true
 		  profile = googleUser.getBasicProfile();
 
 		  // We need to register an Observer on Firebase Auth to make sure auth is initialized.
 		  var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
+
+			state = false
+
 			unsubscribe();
 			// Check if we are already signed-in Firebase with the correct user.
 			if (!isUserEqual(googleUser, firebaseUser)) {
+
+			  h = 0;
+			  m = 0;
+			  s = 0;
+
 			  // Build Firebase credential with the Google ID token.
 			  var credential = firebase.auth.GoogleAuthProvider.credential(
 				googleUser.getAuthResponse().id_token);
 			  // Sign in with credential from the Google user.
-			  firebase.auth().signInWithCredential(credential).catch(function(error) {
-				console.log("Firestore auth failed")
-				var errorCode = error.code;
-				var errorMessage = error.message;
-				var email = error.email;
-				var credential = error.credential;
+			  firebase.auth().signInWithCredential(credential)
+					.then(function() {
+						state = true
+					})
+					.catch(function(error) {
+						console.log("Firestore auth failed")
+						var errorCode = error.code;
+						var errorMessage = error.message;
+						var email = error.email;
+						var credential = error.credential;
 			  });
 			}
 		  });
