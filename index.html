@@ -57,9 +57,14 @@
 		window.setInterval(() => {
 
 			try {
-				1 === firebase.auth().currentUser
-				state = true
-				console.log("state is true")
+				console.log(firebase.auth().currentUser)
+				if (firebase.auth().currentUser) {
+					state = true
+					console.log("state is true")
+				} else {
+					state = false
+					console.log("state is false")
+				}
 			} catch(e) {
 				state = false
 				console.log("state is false")
