@@ -139,19 +139,40 @@
 			  const userId = firebase.auth().currentUser.uid;
 			  const taskdb = db.collection("tasks").doc(userId);
 
-			  db.collection("tasks").doc(userId).set({
-				username: profile.getName(),
-				email: profile.getEmail(),
-				profile_picture : profile.getImageUrl(),
-				hours : h,
-				minutes : m,
-				seconds : s
-			  })
-			  .then(function() {
-    			    console.log("Document successfully written!");
-			  })
-			  .catch(function(error) {
-    			    console.error("Error writing document: ", error);
+			  var docRef = db.collection("tasks").doc(userId);
+
+			  let _h = 0;
+			  let _m = 0; 
+			  let _s = 0;
+
+			  docRef.get().then(function(doc) {
+				if (doc.exists) {
+					console.log("Document data:", doc.data());
+					_h = doc.data().hours
+					_m = doc.data().minutes
+					_s = doc.data().seconds
+
+					db.collection("tasks").doc(userId).update({
+						hours : h + _h,
+						minutes : m + _m,
+						seconds : s + _s
+					})
+				}
+			  }).catch(function(error) {
+				  db.collection("tasks").doc(userId).set({
+					  username: profile.getName(),
+					  email: profile.getEmail(),
+					  profile_picture : profile.getImageUrl(),
+					  hours : h,
+					  minutes : m,
+					  seconds : s
+				  })
+					  .then(function() {
+						  console.log("Document successfully written!");
+					  })
+					  .catch(function(error) {
+						  console.error("Error writing document: ", error);
+					  });
 			  });
 
 			}
