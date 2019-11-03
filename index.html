@@ -190,11 +190,10 @@
 					})
 				  	.then(function() {
 					  console.log("Document successfully updated!");
-					  getUsers()
 				  	})
 				  	.catch(function(error) {
 					  console.error("Error DB update: ", error);
-				  });
+				  	});
 
 				} else {
 
@@ -209,7 +208,6 @@
 				})
 				.then(function() {
 				  console.log("Document successfully created!");
-			          getUsers()
 				})
 				 .catch(function(error) {
 				  console.error("Error DB create: ", error);
