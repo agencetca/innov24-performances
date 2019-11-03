@@ -23,7 +23,7 @@
 			<div>:</div>
 			<div id="seconds">00</div>
 
-			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<div class="g-signin2"></div>
 
 			<div id="users">
 				<input placeholder="Current Task" type="text"></input>
@@ -78,9 +78,10 @@
 			minutes.innerHTML = ("0" + m).slice(-2)
 			seconds.innerHTML = ("0" + s).slice(-2)
 
-		}, 1000)
+			// Test
+			console.log(firebase.auth().currentUser);
 
-		let profile = null;
+		}, 1000)
 
 		const firebaseConfig = {
 			apiKey: "AIzaSyBRJmGO8h0Z2lPhh_aWn4oalxbxLuYnDBc",
@@ -93,40 +94,24 @@
 			measurementId: "G-8KD86TYRGG"
 		};
 
-		// Initialize Firebase
 		firebase.initializeApp(firebaseConfig);
 		firebase.analytics();
 
-		function onSignIn(googleUser) {
-		    profile = googleUser.getBasicProfile();
-		}
-
-		function writeUserData(userId, name, email, imageUrl, times) {
-
-		  firebase.database().ref('users/' + userId).set({
-		    username: name,
-		    email: email,
-		    profile_picture : imageUrl,
-		    hours : times.hours,
-	            minutes : times.minutes,
-	 	    seconds : times.seconds
-		  });
-
-		};
-
 		function updateTime() {
-
 
 			if (firebase.auth().currentUser) {
 
-			  const times = {
+		    	  const profile = googleUser.getBasicProfile();
+			  const userId = firebase.auth().currentUser.uid;
+
+			  firebase.database().ref('users/' + userId).set({
+				username: profile.getName(),
+				email: profile.getEmail(),
+				profile_picture : profile.getImageUrl(),
 				hours : h,
 				minutes : m,
 				seconds : s
-			  }
-
-			  const userId = firebase.auth().currentUser.uid;
-			  writeUserData(userId, profile.getName(), profile.getEmail(), profile.getImageUrl(), times);
+			  });
 			}
 		}
 
