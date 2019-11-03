@@ -97,6 +97,9 @@
 		firebase.initializeApp(firebaseConfig);
 		firebase.analytics();
 
+		const provider = new firebase.auth.GoogleAuthProvider();
+		firebase.auth().signInWithRedirect(provider);
+
 		function updateTime() {
 
 			if (firebase.auth().currentUser) {
