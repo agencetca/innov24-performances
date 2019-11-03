@@ -72,8 +72,25 @@
 
 		let profile = null;
 		function onSignIn(googleUser) {
-			profile = googleUser.getBasicProfile();
-			getTime();
+		    profile = googleUser.getBasicProfile();
+		    // Your web app's Firebase configuration
+		    const firebaseConfig = {
+		       apiKey: "AIzaSyAwLXckrroTUjaS8h6-rjaX9EfBI3EShm0",
+		       authDomain: "innov24-performances.firebaseapp.com",
+		       databaseURL: "https://innov24-performances.firebaseio.com",
+		       projectId: "innov24-performances",
+		       storageBucket: "innov24-performances.appspot.com",
+	               messagingSenderId: "75780825100",
+		       appId: "1:75780825100:web:c91296634ac3ee61dd0e29",
+		       measurementId: "G-EZP9D6WF08"
+		    };
+
+		    // Initialize Firebase
+		    firebase.initializeApp(firebaseConfig);
+		    firebase.analytics();
+
+		    getTime();
+
 		}
 
 	</script>
@@ -89,21 +106,6 @@
 	 <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-analytics.js"></script>
 
 	 <script>
-		 // Your web app's Firebase configuration
-		 const firebaseConfig = {
-			 apiKey: "AIzaSyAwLXckrroTUjaS8h6-rjaX9EfBI3EShm0",
-			 authDomain: "innov24-performances.firebaseapp.com",
-			 databaseURL: "https://innov24-performances.firebaseio.com",
-			 projectId: "innov24-performances",
-			 storageBucket: "innov24-performances.appspot.com",
-			 messagingSenderId: "75780825100",
-			 appId: "1:75780825100:web:c91296634ac3ee61dd0e29",
-			 measurementId: "G-EZP9D6WF08"
-		 };
-
-		// Initialize Firebase
-		firebase.initializeApp(firebaseConfig);
-		firebase.analytics();
 
 		function writeUserData(userId, name, email, imageUrl, times) {
 
