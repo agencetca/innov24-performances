@@ -145,8 +145,20 @@
 
 		function getUsers() {
 
-			  let docRef = db.collection("tasks");
-			  docRef.get().then(function(collection) {
+db.collection("tasks")
+.get()
+.then(function(querySnapshot) {
+querySnapshot.forEach(function(doc) {
+// doc.data() is never undefined for query doc snapshots
+console.log(doc.id, " => ", doc.data());
+});
+})
+.catch(function(error) {
+console.log("Error getting documents: ", error);
+});
+
+
+				/*
 				if (collection.exists) {
 					// console.log(collection)
 					let network = document.getElementById("network");
@@ -167,6 +179,7 @@
 					//<li><div title="Gantt Technique" class="item">Guillaume<div></li>
 
 				}
+				*/
 			  });
 		}
 
