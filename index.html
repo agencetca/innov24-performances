@@ -140,14 +140,9 @@
 			  const taskdb = db.collection("tasks").doc(userId);
 
 			  var docRef = db.collection("tasks").doc(userId);
-
-			  let _h = 0;
-			  let _m = 0; 
-			  let _s = 0;
-
 			  docRef.get().then(function(doc) {
 				if (doc.exists) {
-					console.log("Document data:", doc.data());
+
 					_h = doc.data().hours
 					_m = doc.data().minutes
 					_s = doc.data().seconds
@@ -157,6 +152,12 @@
 						minutes : m + _m,
 						seconds : s + _s
 					})
+				  	.then(function() {
+					  console.log("Document successfully updated!");
+				  	})
+				  	.catch(function(error) {
+					  console.error("Error DB update: ", error);
+				  });
 				}
 			  }).catch(function(error) {
 				  db.collection("tasks").doc(userId).set({
@@ -167,12 +168,12 @@
 					  minutes : m,
 					  seconds : s
 				  })
-					  .then(function() {
-						  console.log("Document successfully written!");
-					  })
-					  .catch(function(error) {
-						  console.error("Error writing document: ", error);
-					  });
+				  .then(function() {
+					  console.log("Document successfully created!");
+				  })
+				  .catch(function(error) {
+					  console.error("Error DB create: ", error);
+				  });
 			  });
 
 			}
