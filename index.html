@@ -56,16 +56,6 @@
 
 		window.setInterval(() => {
 
-			firebase.auth().onAuthStateChanged(function(user) {
-				if (user) {
-					state = true
-					console.log("state is true")
-				} else {
-					state = false
-					console.log("state is false")
-				}
-			});
-
 			if (state === false) return;
 
 			if (h < 23 && m == 59 && s == 59) {
@@ -109,6 +99,16 @@
 
 		const db = firebase.firestore();
 		let profile;
+
+		firebase.auth().onAuthStateChanged(function(user) {
+		  if (user) {
+		    state = true
+		    console.log("state is true")
+		  } else {
+		    state = false
+		    console.log("state is false")
+		  }
+		});
 
 		function isUserEqual(googleUser, firebaseUser) {
 		  if (firebaseUser) {
