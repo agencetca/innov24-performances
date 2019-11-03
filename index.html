@@ -156,7 +156,7 @@
 			  const userId = firebase.auth().currentUser.uid;
 			  const taskdb = db.collection("tasks").doc(userId);
 
-			  return tasksdb.update({
+			  return taskdb.update({
 				hours : h,
 				minutes : m,
 				seconds : s
