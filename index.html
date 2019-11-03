@@ -36,9 +36,8 @@
 
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
 	<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-app.js"></script>
-
 	<script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.2.3/firebase-firestore.js"></script>
 
 	<!-- TODO: Add SDKs for Firebase products that you want to use
 	 https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -112,6 +111,7 @@
  
 		function onSignIn(googleUser) {
 		  profile = googleUser.getBasicProfile();
+
 		  // We need to register an Observer on Firebase Auth to make sure auth is initialized.
 		  var unsubscribe = firebase.auth().onAuthStateChanged(function(firebaseUser) {
 			unsubscribe();
@@ -127,6 +127,23 @@
 				var email = error.email;
 				var credential = error.credential;
 			  });
+
+			  const userId = firebase.auth().currentUser.uid;
+
+			  db.collection("tasks").doc(userId).set({
+				username: profile.getName(),
+				email: profile.getEmail(),
+				profile_picture : profile.getImageUrl(),
+				hours : h,
+				minutes : m,
+				seconds : s
+			  })
+			  .then(function() {
+    			    console.log("Document successfully written!");
+			  })
+			  .catch(function(error) {
+    			    console.error("Error writing document: ", error);
+			  });
 			}
 		  });
 		}
@@ -136,15 +153,21 @@
 			if (profile && firebase.auth().currentUser) {
 
 			  const userId = firebase.auth().currentUser.uid;
+			  const taskdb = db.collection("tasks").doc(userId);
 
-			  firebase.database().ref('users/' + userId).set({
-				username: profile.getName(),
-				email: profile.getEmail(),
-				profile_picture : profile.getImageUrl(),
+			  return tasksdb.update({
 				hours : h,
 				minutes : m,
 				seconds : s
+			  })
+			  .then(function() {
+				console.log("Document successfully updated!");
+			  })
+			  .catch(function(error) {
+				// The document probably doesn't exist.
+				console.error("Error updating document: ", error);
 			  });
+
 			}
 		}
 
