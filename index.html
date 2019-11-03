@@ -81,10 +81,20 @@
 		}, 1000)
 
 		let profile = null;
+		let dbuser = null
+
+		firebase.auth().onAuthStateChanged(function(user) {
+		  if (user) {
+		    // User is signed in.
+	 	    dbuser = user
+		  }
+		});
 
 		function onSignIn(googleUser) {
+
 		    profile = googleUser.getBasicProfile();
 		    // Your web app's Firebase configuration
+
 		    const firebaseConfig = {
 		       apiKey: "AIzaSyAwLXckrroTUjaS8h6-rjaX9EfBI3EShm0",
 		       authDomain: "innov24-performances.firebaseapp.com",
@@ -99,8 +109,6 @@
 		    // Initialize Firebase
 		    firebase.initializeApp(firebaseConfig);
 		    firebase.analytics();
-
-		    getTime();
 
 		}
 
@@ -117,26 +125,6 @@
 		  });
 
 		};
-
-		function getTime() {
-
-		  var userId = firebase.auth().currentUser.uid;
-
-		  const hours = document.getElementById('hours')
-		  const minutes = document.getElementById('minutes')
-		  const seconds = document.getElementById('seconds')
-
-		  backend = firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-
-		    h = (snapshot.val() && snapshot.val().hours) || h;
-		    m = (snapshot.val() && snapshot.val().minutes) || m;
-		    s = (snapshot.val() && snapshot.val().seconds) || s;
-
-		  });
-
-		  backend();
-
-		}
 
 		function updateTime() {
 
