@@ -17,11 +17,11 @@
 			<div id="logo">
 			<img src="logo.png"/>
 			</div>
-			<div id="hours">23</div>
+			<div id="hours">00</div>
 			<div>:</div>
-			<div id="minutes">59</div>
+			<div id="minutes">00</div>
 			<div>:</div>
-			<div id="seconds">57</div>
+			<div id="seconds">00</div>
 
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
@@ -42,8 +42,6 @@
 
 	<script>
 
-		let state = false;
-
 		const hours = document.getElementById('hours')
 		const minutes = document.getElementById('minutes')
 		const seconds = document.getElementById('seconds')
@@ -56,7 +54,7 @@
 
 		window.setInterval(() => {
 
-			if ( ! state ) return;
+			if ( ! googleUser || ! googleUser.getBasicProfile()) return;
 
 			if (h < 23 && m == 59 && s == 59) {
 				h++
@@ -115,8 +113,6 @@
 		}
  
 		function onSignIn(googleUser) {
-
-		  state = true;
 
 		  h = 0;
 		  m = 0;
